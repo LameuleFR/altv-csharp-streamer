@@ -1,5 +1,5 @@
 # altv-csharp-streamer
-ServerSide Streamer using EntitySync. Based on @Niels Work.
+ServerSide Streamer using EntitySync. Based on @DasNiels Work.
 
 Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/
 Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer
