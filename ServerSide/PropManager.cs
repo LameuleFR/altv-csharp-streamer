@@ -535,6 +535,7 @@ namespace IdentityRP
             {
                 AltEntitySync.RemoveEntity(obj);
             }
+            Prop.PropList.Clear();
         }
 
         /// <summary>

@@ -366,9 +366,9 @@ namespace IdentityRP.Manager
         {
             foreach (PlayerLabel obj in GetAllDynamicTextLabels())
             {
-                PlayerLabel.LabelList.Remove(obj);
                 AltEntitySync.RemoveEntity(obj);
             }
+            PlayerLabel.LabelList.Clear();
         }
 
         /// <summary>

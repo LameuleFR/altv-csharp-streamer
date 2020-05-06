@@ -533,9 +533,9 @@ namespace IdentityRP
         {
             foreach (Marker marker in GetAllDynamicMarkers())
             {
-                Marker.MarkerList.Remove(marker);
                 AltEntitySync.RemoveEntity(marker);
             }
+            Marker.MarkerList.Clear();
         }
 
         /// <summary>
