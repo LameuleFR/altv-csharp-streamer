@@ -6,77 +6,65 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
     if( currEntityData ) {
         let data = currEntityData;
         if(data != undefined) {
-            if (entityType === 1){
+            if (entityType == 1){
                 textLabelStreamer.addTextLabel(
-                    entityId, data.text, position, data.scale, data.font, data.color, data.dropShadow, data.edge, data.center, data.proportional, entityType
+                    +entityId, data.text, position, data.scale, data.font, data.color, data.dropShadow, data.edge, data.center, data.proportional, +entityType
                 );
             }
         }
+    }else{
+	    if (entityType == 1){
+			     textLabelStreamer.restoreTextLabel( +entityId );
+		  }
     }
-    else
-    {
-	    if (entityType === 1){
-			textLabelStreamer.restoreTextLabel( entityId, entityType );
-		}
-    }
-} );
+});
 
 // when an object is streamed out
 alt.onServer("entitySync:remove", (entityId, entityType) => {
-    if (entityType = 1){
-        textLabelStreamer.removeTextLabel( entityId, entityType );
+    if (entityType == 1){
+        textLabelStreamer.removeTextLabel( +entityId );
     }
 } );
 
 // when a streamed in object changes position data
 alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
-    if (entityType = 1){
-        let textLabel = textLabelStreamer.getTextLabel( entityId, entityType );
-
-        if( textLabel === null )
-            return;
-
-        textLabelStreamer.setPosition( textLabel, position );
+    if (entityType == 1){
+        textLabelStreamer.setPosition( +entityId, position );
     }
 } );
 
 // when a streamed in object changes data
 alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
-    if (entityType = 1){
-        let textLabel = textLabelStreamer.getTextLabel( entityId, entityType );
-
-        if( textLabel === null )
-            return;
-
+    if (entityType == 1){
         if( newEntityData.hasOwnProperty( "center" ) )
-            textLabelStreamer.setCenter( textLabel, newEntityData.center );
+            textLabelStreamer.setCenter( +entityId , newEntityData.center );
 
         if( newEntityData.hasOwnProperty( "color" ) )
-            textLabelStreamer.setColor( textLabel, newEntityData.color );
+            textLabelStreamer.setColor( +entityId , newEntityData.color );
 
         if( newEntityData.hasOwnProperty( "center" ) )
-            textLabelStreamer.setDropShadow( textLabel, newEntityData.center );
+            textLabelStreamer.setDropShadow( +entityId , newEntityData.center );
 
         if( newEntityData.hasOwnProperty( "edge" ) )
-            textLabelStreamer.setEdge( textLabel, newEntityData.edge );
+            textLabelStreamer.setEdge( +entityId , newEntityData.edge );
 
         if( newEntityData.hasOwnProperty( "font" ) )
-            textLabelStreamer.setFont( textLabel, newEntityData.font );
+            textLabelStreamer.setFont( +entityId , newEntityData.font );
 
         if( newEntityData.hasOwnProperty( "proportional" ) )
-            textLabelStreamer.setProportional( textLabel, newEntityData.proportional );
+            textLabelStreamer.setProportional( +entityId , newEntityData.proportional );
 
         if( newEntityData.hasOwnProperty( "scale" ) )
-            textLabelStreamer.setScale( textLabel, newEntityData.scale );
+            textLabelStreamer.setScale( +entityId , newEntityData.scale );
 
         if( newEntityData.hasOwnProperty( "text" ) )
-            textLabelStreamer.setText( textLabel, newEntityData.text );
+            textLabelStreamer.setText( +entityId , newEntityData.text );
     }
 } );
 
 // when a streamed in object needs to be removed
-alt.onServer("entitySync:clearCache", (entityId, entityType) => {    
-    if (entityType = 1){
-        textLabelStreamer.clearTextLabel( entityId, entityType );
+alt.onServer("entitySync:clearCache", (entityId, entityType) => {
+    if (entityType == 1){
+        textLabelStreamer.clearTextLabel( +entityId );
     }
 } );

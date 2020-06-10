@@ -7,135 +7,119 @@ import * as natives from 'natives';
 
 class TextLabelStreamer {
     constructor() {
-        this.textLabels = [];
+        this.textLabels = {};
     }
 
     async addTextLabel( entityId, text, position, scale, font, color, dropShadow, edge, center, proportional, entityType ) {
-        this.removeTextLabel( entityId, entityType );
-        this.clearTextLabel( entityId, entityType );
+        this.removeTextLabel( +entityId );
+        this.clearTextLabel( +entityId );
 
         let textLabel = {
             onDisplay: true, position: position,
-            entityId: entityId, entityType: entityType,
+            entityId: +entityId, entityType: +entityType,
         };
 
-        this.setText( textLabel, text );
-        this.setScale( textLabel, scale );
-        this.setFont( textLabel, font );
-        this.setColor( textLabel, color );
-        this.setDropShadow( textLabel, dropShadow );
-        this.setEdge( textLabel, edge );
-        this.setCenter( textLabel, center );
-        this.setProportional( textLabel, proportional );
+        this.textLabels[entityId] = textLabel;
 
-        this.textLabels.push( textLabel );
+        this.setText( +entityId, text );
+        this.setScale( +entityId, scale );
+        this.setFont( +entityId, font );
+        this.setColor( +entityId, color );
+        this.setDropShadow( +entityId, dropShadow );
+        this.setEdge( +entityId, edge );
+        this.setCenter( +entityId, center );
+        this.setProportional( +entityId, proportional );
     }
 
-    getTextLabel( entityId, entityType ) {
-        let marker = this.textLabels.find( t => t.entityId === +entityId && t.entityType == +entityType);
-
-        if( !marker )
-            return null;
-
-        return marker;
+    getTextLabel( entityId ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        return this.textLabels[entityId];
+      }else{
+        return null;
+      }
     }
 
-    restoreTextLabel( entityId, entityType ) {
-        //console.log("Restauration d'un textlabel");
-        let textLabel = this.getTextLabel( entityId, entityType );
-
-        if( textLabel === null )
-            return;
-
-        textLabel.onDisplay = true;
+    restoreTextLabel( entityId ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].onDisplay = true;
+      }
     }
 
-    removeTextLabel( entityId, entityType ) {
-        let textLabel = this.getTextLabel( entityId, entityType );
-
-        if( textLabel === null )
-            return;
-
-        textLabel.onDisplay = false;
+    removeTextLabel( entityId ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].onDisplay = false;
+      }
     }
 
-    clearTextLabel( entityId, entityType ) {
-        let idx = this.textLabels.findIndex( t => +t.entityId === entityId && t.entityType === +entityType );
-
-        if( idx === -1 )
-            return;
-
-        this.textLabels.splice( idx, 1 );
+    clearTextLabel( entityId ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        delete this.textLabels[entityId];
+      }
     }
 
-    setPosition( textLabel, pos ) {
-        textLabel.position = pos;
+    clearAllTextLabel() {
+      this.textLabels = {};
     }
 
-    setText( textLabel, text ) {
-        if( text === null )
-            text = "3D Textlabel";
-
-        textLabel.text = text;
+    setPosition( entityId, pos ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].position = pos;
+      }
     }
 
-    setScale( textLabel, scale ) {
-        if( scale === null )
-            scale = 1;
-
-        textLabel.scale = scale;
+    setText( entityId, text = "3D Textlabel" ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].text = text;
+      }
     }
 
-    setFont( textLabel, font ) {
-        if( font === null )
-            font = 4;
-
-        textLabel.font = font;
+    setScale( entityId, scale = 1 ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].scale = scale;
+      }
     }
 
-    setColor( textLabel, color ) {
-        if( color === null )
-            color = { r: 255, g: 255, b: 255, a: 255 };
-
-        textLabel.color = color;
+    setFont( entityId, font = 4 ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].font = font;
+      }
     }
 
-    setDropShadow( textLabel, dropShadow ) {
-        if( dropShadow === null )
-            dropShadow = { distance: 0, r: 0, g: 0, b: 0, a: 255 };
-
-        textLabel.dropShadow = dropShadow;
+    setColor( entityId, color = { r: 255, g: 255, b: 255, a: 255 } ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].color = color;
+      }
     }
 
-    setEdge( textLabel, edge ) {
-        if( edge === null )
-            edge = { r: 255, g: 255, b: 255, a: 255 };
-
-        textLabel.edge = edge;
+    setDropShadow( entityId, dropShadow = { distance: 0, r: 0, g: 0, b: 0, a: 255 } ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].dropShadow = dropShadow;
+      }
     }
 
-    setCenter( textLabel, center ) {
-        if( center === null )
-            center = true;
-
-        textLabel.center = center;
+    setEdge( entityId, edge = { r: 255, g: 255, b: 255, a: 255 } ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].edge = edge;
+      }
     }
 
-    setProportional( textLabel, proportional ) {
-        if( proportional === null )
-            proportional = true;
+    setCenter( entityId, center = true ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].center = center;
+      }
+    }
 
-        textLabel.proportional = proportional;
+    setProportional( entityId, proportional = true ) {
+      if(this.textLabels.hasOwnProperty(entityId)){
+        this.textLabels[entityId].proportional = proportional;
+      }
     }
 }
 
 export const textLabelStreamer = new TextLabelStreamer();
 
 alt.on( "resourceStop", () => {
-    textLabelStreamer.textLabels.forEach( ( textLabel ) => {
-        textLabelStreamer.removeTextLabel( textLabel.entityId, textLabel.entityType );
-        textLabelStreamer.clearTextLabel( textLabel.entityId, textLabel.entityType );
-    } );
+    textLabelStreamer.clearAllTextLabel();
 } );
 
 function draw3dText( text, pos, scale, font, color, dropShadow, edge, center, proportional ) {
@@ -154,7 +138,7 @@ function draw3dText( text, pos, scale, font, color, dropShadow, edge, center, pr
     natives.setTextCentre( center );
     natives.setTextProportional( proportional );
 
-    if(!color || !color.r) 
+    if(!color || !color.r)
     {
         color = { r: 0, g:0,b:0,a:0};
     }
@@ -167,25 +151,20 @@ function draw3dText( text, pos, scale, font, color, dropShadow, edge, center, pr
 }
 
 alt.everyTick( () => {
-    textLabelStreamer.textLabels.forEach( ( textLabel ) => {
-        if( textLabel.onDisplay ) {
-            // let pos = alt.Player.local.pos;
-            // let ray = natives.startShapeTestRay( pos.x, pos.y, pos.z, textLabel.position.x, textLabel.position.y, textLabel.position.z, ( 1 | 2 | 16 | 256 ), +alt.Player.local.scriptID, 0 );
-            // let result = natives.getShapeTestResult( ray, undefined, undefined, undefined, undefined );
-            //
-            // alt.log( `data; ${ JSON.stringify( result ) }` );
-
-                draw3dText(
-                    textLabel.text,
-                    textLabel.position,
-                    textLabel.scale,
-                    textLabel.font,
-                    textLabel.color,
-                    textLabel.dropShadow,
-                    textLabel.edge,
-                    textLabel.center,
-                    textLabel.proportional
-                );
-        }
-    } );
+  for(var key in  textLabelStreamer.textLabels) {
+    let textLabel = textLabelStreamer.textLabels[key];
+    if(textLabel.onDisplay){
+      draw3dText(
+          textLabel.text,
+          textLabel.position,
+          textLabel.scale,
+          textLabel.font,
+          textLabel.color,
+          textLabel.dropShadow,
+          textLabel.edge,
+          textLabel.center,
+          textLabel.proportional
+      );
+    }
+  }
 } );

@@ -5,89 +5,77 @@ import { markerStreamer } from "./marker-streamer";
 alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {
     if( currEntityData ) {
         let data = currEntityData;
-        if(entityType === 0 ) {
+        if(entityType == 0 ) {
             markerStreamer.addMarker(
                 +entityId, data.markerType, +entityType,
                 position, data.rotation,
-                data.direction, data.scale, data.color, data.bobUpDown, data.faceCam, data.rotate, data.textureDict, data.textureName, data.drawOnEnter, 
+                data.direction, data.scale, data.color, data.bobUpDown, data.faceCam, data.rotate, data.textureDict, data.textureName, data.drawOnEnter,
             );
         }
     }
     else
     {
-        if (entityType === 0){
-            markerStreamer.restoreMarker( +entityId, +entityType );
+        if (entityType == 0){
+            markerStreamer.restoreMarker( +entityId );
         }
     }
 } );
 
 // when an object is streamed out
 alt.onServer("entitySync:remove", (entityId, entityType) => {
-    if (entityType === 0){
-        markerStreamer.removeMarker( +entityId, +entityType );
+    if (entityType == 0){
+        markerStreamer.removeMarker( +entityId );
     }
 } );
 
 // when a streamed in object changes position data
 alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
-    if (entityType === 0){
-        let marker = markerStreamer.getMarker( +entityId, +entityType  );
-
-        if( marker === null )
-            return;
-
-        markerStreamer.setPosition( marker, position );
+    if (entityType == 0){
+        markerStreamer.setPosition( +entityId, position );
     }
 } );
 
 // when a streamed in object changes data
 alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
-    if (entityType === 0){
-        //alt.log( "data: ", JSON.stringify( newEntityData ) );
-
-        let marker = markerStreamer.getMarker( +entityId, +entityType  );
-
-        if( marker === null )
-            return;
-
+    if (entityType == 0){
         if( newEntityData.hasOwnProperty( "rotation" ) )
-            markerStreamer.setRotation( marker, newEntityData.rotation );
+            markerStreamer.setRotation( +entityId, newEntityData.rotation );
 
         if( newEntityData.hasOwnProperty( "markerType" ) )
-            markerStreamer.setMarkerType( marker, newEntityData.markerType );
+            markerStreamer.setMarkerType( +entityId, newEntityData.markerType );
 
         if( newEntityData.hasOwnProperty( "drawOnEnter" ) )
-            markerStreamer.setDrawOnEnter( marker, newEntityData.drawOnEnter );
+            markerStreamer.setDrawOnEnter( +entityId, newEntityData.drawOnEnter );
 
         if( newEntityData.hasOwnProperty( "textureName" ) )
-            markerStreamer.setTextureName( marker, newEntityData.textureName );
+            markerStreamer.setTextureName( +entityId, newEntityData.textureName );
 
         if( newEntityData.hasOwnProperty( "textureDict" ) )
-            markerStreamer.setTextureDict( marker, newEntityData.textureDict );
+            markerStreamer.setTextureDict( +entityId, newEntityData.textureDict );
 
         if( newEntityData.hasOwnProperty( "rotate" ) )
-            markerStreamer.setRotate( marker, newEntityData.rotate );
+            markerStreamer.setRotate( +entityId, newEntityData.rotate );
 
         if( newEntityData.hasOwnProperty( "faceCam" ) )
-            markerStreamer.setFaceCamera( marker, newEntityData.faceCam );
+            markerStreamer.setFaceCamera( +entityId, newEntityData.faceCam );
 
         if( newEntityData.hasOwnProperty( "bobUpDown" ) )
-            markerStreamer.setBobUpDown( marker, newEntityData.bobUpDown );
+            markerStreamer.setBobUpDown( +entityId, newEntityData.bobUpDown );
 
         if( newEntityData.hasOwnProperty( "color" ) )
-            markerStreamer.setColor( marker, newEntityData.color );
+            markerStreamer.setColor( +entityId, newEntityData.color );
 
         if( newEntityData.hasOwnProperty( "scale" ) )
-            markerStreamer.setScale( marker, newEntityData.scale );
+            markerStreamer.setScale( +entityId, newEntityData.scale );
 
         if( newEntityData.hasOwnProperty( "direction" ) )
-            markerStreamer.setDirection( marker, newEntityData.direction );
+            markerStreamer.setDirection( +entityId, newEntityData.direction );
     }
 } );
 
 // when a streamed in object needs to be removed
 alt.onServer("entitySync:clearCache", (entityId, entityType) => {
-    if (entityType === 0){
-        markerStreamer.clearMarker( +entityId, +entityType  );
+    if (entityType == 0){
+        markerStreamer.clearMarker(+entityId);
     }
 } );

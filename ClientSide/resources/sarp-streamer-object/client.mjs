@@ -1,4 +1,3 @@
-
 import * as alt from 'alt';
 
 import { objStreamer } from "./object-streamer";
@@ -8,10 +7,10 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
     if( currEntityData ) {
         let data = currEntityData;
         if(data != undefined ) {
-            if (entityType === 2){
+            if (entityType == 2){
                 //alt.log("Object Position " +position);
                 objStreamer.addObject(
-                    entityId, data.model, entityType,
+                    +entityId, data.model, +entityType,
                     position, data.rotation,
                     data.lodDistance, data.textureVariation, data.dynamic,
                     data.visible, data.onFire, data.freeze, data.lightColor
@@ -22,79 +21,68 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
     // this entity has streamed in before, fetch from cache
     else
     {
-	    if (entityType === 2){
-			objStreamer.restoreObject( entityId, entityType );
-		}
+	    if (entityType == 2){
+			     objStreamer.restoreObject( +entityId );
+		  }
     }
 } );
 
 // when an object is streamed out
 alt.onServer("entitySync:remove", (entityId, entityType) => {
-    if (entityType === 2){
-        objStreamer.removeObject( entityId, entityType );
+    if (entityType == 2){
+        objStreamer.removeObject( +entityId );
     }
 } );
 
 // when a streamed in object changes position data
 alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
-    if (entityType === 2){
-        let obj = objStreamer.getObject( entityId, entityType );
-
-        if( obj === null )
-            return;
-
-        objStreamer.setPosition( obj, position );
+    if (entityType == 2){
+        objStreamer.setPosition( +entityId, position );
     }
 } );
 
 // when a streamed in object changes data
 alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
-    if (entityType === 2){
-        let obj = objStreamer.getObject( entityId, entityType );
-
-        if( obj === null )
-            return;
-            
+    if (entityType == 2){
         if( newEntityData.hasOwnProperty( "rotation" ) )
-            objStreamer.setRotation( obj, newEntityData.rotation );
+            objStreamer.setRotation( +entityId, newEntityData.rotation );
 
         if( newEntityData.hasOwnProperty( "velocity" ) )
-            objStreamer.setVelocity( obj, newEntityData.velocity );
+            objStreamer.setVelocity( +entityId, newEntityData.velocity );
 
         if( newEntityData.hasOwnProperty( "model" ) )
-            objStreamer.setModel( obj, newEntityData.model );
+            objStreamer.setModel( +entityId, newEntityData.model );
 
         if( newEntityData.hasOwnProperty( "lodDistance" ) )
-            objStreamer.setLodDistance( obj, newEntityData.lodDistance );
+            objStreamer.setLodDistance( +entityId, newEntityData.lodDistance );
 
         if( newEntityData.hasOwnProperty( "textureVariation" ) )
-            objStreamer.setTextureVariation( obj, newEntityData.textureVariation );
+            objStreamer.setTextureVariation( +entityId, newEntityData.textureVariation );
 
         if( newEntityData.hasOwnProperty( "dynamic" ) )
-            objStreamer.setDynamic( obj, newEntityData.dynamic );
+            objStreamer.setDynamic( +entityId, newEntityData.dynamic );
 
         if( newEntityData.hasOwnProperty( "visible" ) )
-            objStreamer.setVisible( obj, newEntityData.visible );
+            objStreamer.setVisible( +entityId, newEntityData.visible );
 
         if( newEntityData.hasOwnProperty( "onFire" ) )
-            objStreamer.setOnFire( obj, newEntityData.onFire );
+            objStreamer.setOnFire( +entityId, newEntityData.onFire );
 
         if( newEntityData.hasOwnProperty( "freeze" ) )
-            objStreamer.setFrozen( obj, newEntityData.freeze );
+            objStreamer.setFrozen( +entityId, newEntityData.freeze );
 
         if( newEntityData.hasOwnProperty( "lightColor" ) )
-            objStreamer.setLightColor( obj, newEntityData.lightColor );        
-            
-            
+            objStreamer.setLightColor( +entityId, newEntityData.lightColor );
+
         if( newEntityData.hasOwnProperty( "slideToPosition" ) )
-            objStreamer.slideToPosition( obj, newEntityData.slideToPosition, 500 );
-            
+            objStreamer.slideToPosition( +entityId, newEntityData.slideToPosition, 500 );
+
     }
 } );
 
 // when a streamed in object needs to be removed
 alt.onServer("entitySync:clearCache", (entityId, entityType) => {
-    if (entityType === 2){
-        objStreamer.clearObject( entityId, entityType );
+    if (entityType == 2){
+        objStreamer.clearObject( +entityId );
     }
 } );

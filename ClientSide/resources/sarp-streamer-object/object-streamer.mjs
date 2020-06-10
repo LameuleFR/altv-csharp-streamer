@@ -25,101 +25,94 @@ async function loadModel(model) {
 
 class ObjectStreamer {
     constructor( ) {
-        this.objects = [];
+        this.objects = {};
     }
 
     async addObject( entityId, model, entityType, pos, rot, lodDistance, textureVariation, dynamic, visible, onFire, frozen, lightColor  ) {
         // clear the object incase it still exists.
-        this.removeObject( entityId, entityType );
-        this.clearObject( entityId, entityType );
+        this.removeObject( +entityId );
+        this.clearObject( +entityId );
 
         loadModel(model).then(() =>
         {
             let handle = natives.createObject( natives.getHashKey( model ), pos.x, pos.y, pos.z, false, false, false );
             let obj = { handle: handle, entityId: entityId, model: model, entityType: entityType, position: pos, frozen: frozen };
-            this.objects.push( obj );
-            this.setRotation( obj, rot );
+            this.objects[entityId] = obj;
+            this.setRotation( +entityId, rot );
             //this.setLodDistance( obj, lodDistance );
-            this.setTextureVariation( obj, textureVariation );
-            this.setDynamic( obj, dynamic );
+            this.setTextureVariation( +entityId, textureVariation );
+            this.setDynamic( +entityId, dynamic );
             //this.setVisible( obj, visible );
-            this.setOnFire( obj, onFire );
-            this.setFrozen( obj, frozen );
-            this.setLightColor( obj, lightColor );
+            this.setOnFire( +entityId, onFire );
+            this.setFrozen( +entityId, frozen );
+            this.setLightColor( +entityId, lightColor );
         });
     }
 
     getObject( entityId, entityType ) {
-        let obj = this.objects.find( o => o.entityId === entityId && o.entityType === entityType);
-
-        if( !obj )
-            return null;
-
-        return obj;
+      if(this.objects.hasOwnProperty(entityId)){
+        return this.objects[entityId];
+      }else{
+        return null;
+      }
     }
 
     async restoreObject( entityId, entityType ) {
-        let obj = this.getObject( entityId, entityType );
-
-        if( obj === null )
-            return;
-
+      if(this.objects.hasOwnProperty(entityId)){
+        let obj = this.objects[entityId];
         loadModel(obj.model).then(() =>
         {
-            obj.handle = natives.createObject( natives.getHashKey( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
-            this.setRotation( obj, obj.rotation );
+            this.objects[entityId].handle = natives.createObject( natives.getHashKey( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
+            this.setRotation( +entityId, obj.rotation );
             //this.setLodDistance( obj, obj.lodDistance );
-            this.setTextureVariation( obj, obj.textureVariation );
-            this.setDynamic( obj, obj.dynamic );
+            this.setTextureVariation( +entityId, obj.textureVariation );
+            this.setDynamic( +entityId, obj.dynamic );
             //this.setVisible( obj, obj.visible );
-            this.setOnFire( obj, obj.onFire );
-            this.setFrozen( obj, obj.frozen );
-            this.setLightColor( obj, obj.lightColor );
+            this.setOnFire( +entityId, obj.onFire );
+            this.setFrozen( +entityId, obj.frozen );
+            this.setLightColor( +entityId, obj.lightColor );
         });
+      }
     }
 
     removeObject( entityId, entityType ) {
-        let obj = this.getObject( entityId, entityType );
-
-        if( obj === null )
-            return;
-
-		natives.deleteObject( obj.handle );
-
-        obj.handle = null;
+      if(this.objects.hasOwnProperty(entityId)){
+        natives.deleteObject( this.objects[entityId].handle );
+        this.objects[entityId].handle = null;
+      }
     }
 
     clearObject( entityId, entityType ) {
-        let idx = this.objects.findIndex( o => o.entityId === entityId && o.entityType === entityType);
-
-        if( idx === -1 )
-            return;
-
-        this.objects.splice( idx, 1 );
+      if(this.objects.hasOwnProperty(entityId)){
+        delete this.objects[entityId];
+      }
     }
 
-    setRotation( obj, rot ) {
-		natives.setEntityRotation( obj.handle, rot.x, rot.y, rot.z, 0, true );
-        obj.rotation = rot;
+    clearAllObject() {
+        this.objects= {};
     }
-    setVelocity( obj, vel ) {
-		natives.setEntityVelocity( obj.handle, vel.x, vel.y, vel.z);
-        obj.velocity = vel;
+
+    setRotation( entityId, rot ) {
+      if(this.objects.hasOwnProperty(entityId)){
+        natives.setEntityRotation( this.objects[entityId].handle, rot.x, rot.y, rot.z, 0, true );
+        this.objects[entityId].rotation = rot;
+      }
     }
-    slideToPosition( obj, pos, time ) {
-
-        var count = 0;
-        alt.log("slideToPosition");
-
-
-        native.slideObject(obj.handle, pos.x, pos.y, pos.z, 8, 8, 8, true); 
+    setVelocity( entityId, vel ) {
+      if(this.objects.hasOwnProperty(entityId)){
+        natives.setEntityVelocity( this.objects[entityId].handle, vel.x, vel.y, vel.z);
+        this.objects[entityId].velocity = vel;
+      }
+    }
+    slideToPosition( entityId, pos, time ) {
+        let count = 0;
+        native.slideObject(this.objects[entityId].handle, pos.x, pos.y, pos.z, 8, 8, 8, true);
         /*
-        var slide = alt.setInterval(() => 
+        var slide = alt.setInterval(() =>
         {
             alt.log("slideInterval:count:" + count);
             count++;
             if(count >= 10) alt.clearInterval(slide);
-
             var objectPos = native.getEntityCoords(objet, false);
             var vel = {x,y,z};
             vel.x = (pos.x - objectPos.x) / 3;
@@ -127,96 +120,89 @@ class ObjectStreamer {
             vel.z = (pos.z - objectPos.z) / 3;
 		    natives.setEntityVelocity( obj.handle, vel.x, vel.y, vel.z);
         }, time / 10);
-
         */
     }
 
-    setPosition( obj, pos ) {
-		natives.setEntityCoordsNoOffset( obj.handle, pos.x, pos.y, pos.z, true, true, true );
-        obj.position = pos;
+    setPosition( entityId, pos ) {
+      if(this.objects.hasOwnProperty(entityId)){
+        natives.setEntityCoordsNoOffset( this.objects[entityId].handle, pos.x, pos.y, pos.z, true, true, true );
+        this.objects[entityId].position = pos;
+      }
     }
 
-    async setModel( obj, model ) {
-        obj.model = model;
+    async setModel( entityId, model ) {
+      if(this.objects.hasOwnProperty(entityId)){
+        this.objects[entityId].model = model;
+      }
     }
 
-    setLodDistance( obj, lodDistance ) {
-        if( lodDistance === null )
-            return;
-			natives.setEntityLodDist( obj.handle, lodDistance );
-        obj.lodDistance = lodDistance;
+    setLodDistance( entityId, lodDistance ) {
+      if(this.objects.hasOwnProperty(entityId) && lodDistance !== null){
+        natives.setEntityLodDist( this.objects[entityId].handle, lodDistance );
+        this.objects[entityId].lodDistance = lodDistance;
+      }
     }
 
-    setTextureVariation( obj, textureVariation ) {	
-			if( textureVariation === null )
-			{
-				if( obj.textureVariation !== null )
-				{
-					natives.setObjectTextureVariation( obj.handle, textureVariation );
-					obj.textureVariation = null;
-				}
-				return;
-			}
-
-			natives.setObjectTextureVariation( obj.handle, textureVariation );
-			obj.textureVariation = textureVariation;
+    setTextureVariation( entityId, textureVariation = null ) {
+      if(this.objects.hasOwnProperty(entityId)){
+        natives.setObjectTextureVariation( this.objects[entityId].handle, textureVariation );
+        this.objects[entityId].textureVariation = textureVariation;
+      }
     }
 
-    setDynamic( obj, dynamic ) {
-        if( dynamic === null )
-            return;
-		natives.setEntityDynamic( obj.handle, !!dynamic );
-        obj.dynamic = !!dynamic;
+    setDynamic( entityId, dynamic ) {
+      if(this.objects.hasOwnProperty(entityId) && dynamic !== null){
+        natives.setEntityDynamic( this.objects[entityId].handle, !!dynamic );
+        this.objects[entityId].dynamic = !!dynamic;
+      }
     }
 
-    setVisible( obj, visible ) {
-        if( visible === null )
-            return;
-		natives.setEntityVisible( obj.handle, !!visible, false );
-        obj.textureVariation = !!visible;
+    setVisible( entityId, visible ) {
+      if(this.objects.hasOwnProperty(entityId) && visible !== null){
+        natives.setEntityVisible( this.objects[entityId].handle, !!visible, false );
+        this.objects[entityId].visible = !!visible;
+      }
     }
 
-    setOnFire( obj, onFire ) {
-        if( onFire === null )
-            return;
-
+    setOnFire( entityId, onFire = null ) {
+      if(this.objects.hasOwnProperty(entityId) && onFire !== null){
         if( !!onFire )
         {
-            obj.fireHandle = natives.startScriptFire( obj.position.x, obj.position.y, obj.position.z, 1, true );
+            this.objects[entityId].fireHandle = natives.startScriptFire( this.objects[entityId].position.x, this.objects[entityId].position.y, this.objects[entityId].position.z, 1, true );
         }
         else
         {
-            if( obj.fireHandle !== null )
+            if( this.objects[entityId].fireHandle !== null )
             {
-                natives.removeScriptFire( obj.fireHandle );
-                obj.fireHandle = null;
+                natives.removeScriptFire( this.objects[entityId].fireHandle );
+                this.objects[entityId].fireHandle = null;
             }
         }
 
-        obj.onFire = !!onFire;
+        this.objects[entityId].onFire = !!onFire;
+      }
     }
 
-    setFrozen( obj, frozen ) {
-        if( frozen === null )
-            return;
-		natives.freezeEntityPosition( obj.handle, frozen );
-        obj.frozen = frozen;
+    setFrozen( entityId, frozen ) {
+      if(this.objects.hasOwnProperty(entityId) && frozen !== null){
+        natives.freezeEntityPosition( this.objects[entityId].handle, frozen );
+        this.objects[entityId].frozen = frozen;
+      }
     }
 
-    setLightColor( obj, lightColor ) {
-			if( lightColor === null )
-				natives.setObjectLightColor( obj.handle, false, 0, 0, 0 );
-			else
-				natives.setObjectLightColor( obj.handle, true, lightColor.r, lightColor.g, lightColor.b );
-        obj.lightColor = lightColor;
+    setLightColor( entityId, lightColor = {r:0,g:0,b:0} ) {
+      if(this.objects.hasOwnProperty(entityId) && lightColor !== null){
+        natives.setObjectLightColor( this.objects[entityId].handle, true, lightColor.r, lightColor.g, lightColor.b );
+        this.objects[entityId].lightColor = lightColor;
+      }else{
+        natives.setObjectLightColor( this.objects[entityId].handle, true, 0, 0, 0 );
+        this.objects[entityId].lightColor = lightColor;
+      }
     }
 }
 
 export const objStreamer = new ObjectStreamer();
 
 alt.on( "resourceStop", ( ) => {
-    objStreamer.objects.forEach( ( obj ) => {
-        objStreamer.removeObject( obj.entityId, obj.entityType );
-        objStreamer.clearObject( obj.entityId, obj.entityType );
-    } );
+    objStreamer.clearAllObject();
 } );
