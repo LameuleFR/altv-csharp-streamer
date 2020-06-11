@@ -137,7 +137,7 @@ class MarkerStreamer {
 export const markerStreamer = new MarkerStreamer();
 
 alt.on( "resourceStop", ( ) => {
-    markerStreamer.markers.clearAllMarker();
+    markerStreamer.clearAllMarker();
 } );
 
 alt.everyTick( ( ) => {
