@@ -1,9 +1,11 @@
 # altv-csharp-streamer
 ServerSide Streamer using EntitySync. Based on @DasNiels Work.
 
-Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/
-Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer
-Original Marker Streamer: https://github.com/DasNiels/altv-marker-streamer
+# Current Streamer Available
+- TextLabel
+- HelpText
+- MarkerManager
+- ObjectManager
 
 # Installation
 This resource makes use of the AltV.Net.EntitySync (v1.6.2-dev-preview) and AltV.Net.EntitySync.ServerEvent (v1.3.0) nuget package, make sure to install those prior to using this resource.
@@ -12,7 +14,7 @@ Make sure to add the following code to your gamemode's OnStart() method(the stre
 // Documentation: https://fabianterhorst.github.io/coreclr-module/articles/entity-sync.html
 
 ```
-            AltEntitySync.Init(3, 250,
+            AltEntitySync.Init(4, 250,
                (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
                (entity, threadCount) => entity.Type,
                (entityId, entityType, threadCount) => entityType,
@@ -40,3 +42,8 @@ Make sure to add the following code to your gamemode's OnStart() method(the stre
             new IdProvider());
 ```
 
+# Credits
+
+Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/
+Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer
+Original Marker Streamer: https://github.com/DasNiels/altv-marker-streamer
