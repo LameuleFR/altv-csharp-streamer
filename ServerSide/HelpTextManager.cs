@@ -78,7 +78,7 @@ namespace SARP.Manager.HelpText
             string text, Vector3 position, int dimension = 0, uint streamRange = 5
         )
         {
-			HelpText helper = new HelpText(position, dimension, streamRange, (ulong)sUtils.EntitySyncType.HelpText)
+			HelpText helper = new HelpText(position, dimension, streamRange, 4)
             {
                 Text = text,
             };
@@ -129,7 +129,7 @@ namespace SARP.Manager.HelpText
 		/// <returns>The dynamic textlabel or null if not found.</returns>
 		public static HelpText GetHelpText(ulong dynamicTextLabelId)
         {
-            if (!AltEntitySync.TryGetEntity(dynamicTextLabelId, (ulong)sUtils.EntitySyncType.HelpText, out IEntity entity))
+            if (!AltEntitySync.TryGetEntity(dynamicTextLabelId, 4, out IEntity entity))
             {
                 Console.WriteLine($"[OBJECT-STREAMER] [GetDynamicTextLabel] ERROR: Entity with ID { dynamicTextLabelId } couldn't be found.");
                 return null;
