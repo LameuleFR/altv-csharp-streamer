@@ -1,5 +1,5 @@
 import * as alt from 'alt';
-import { helpTextStreamer } from "./textlabel-streamer";
+import { helpTextStreamer } from "./helptext-streamer";
 
 // when an object is streamed in
 alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {

@@ -13,6 +13,7 @@ class HelpTextStreamer {
 		let HelpText = {
 			onDisplay: true, position: position,
 			entityId: +entityId, entityType: +entityType,
+			text: text,
 		};
 
 		this.helpText[entityId] = HelpText;
@@ -20,16 +21,16 @@ class HelpTextStreamer {
 	}
 
 	getHelpText(entityId) {
-		if (this.textLabels.hasOwnProperty(entityId)) {
-			return this.textLabels[entityId];
+		if (this.helpText.hasOwnProperty(entityId)) {
+			return this.helpText[entityId];
 		} else {
 			return null;
 		}
 	}
 
 	restoreHelpText(entityId) {
-		if (this.textLabels.hasOwnProperty(entityId)) {
-			this.textLabels[entityId].onDisplay = true;
+		if (this.helpText.hasOwnProperty(entityId)) {
+			this.helpText[entityId].onDisplay = true;
 		}
 	}
 
@@ -55,7 +56,7 @@ class HelpTextStreamer {
 		}
 	}
 
-	setText(entityId, text = "Non défini") {
+	setText(entityId, text = "Non dï¿½fini") {
 		if (this.helpText.hasOwnProperty(entityId)) {
 			this.helpText[entityId].text = text;
 		}
@@ -69,7 +70,9 @@ alt.on("resourceStop", () => {
 });
 
 function drawHelpText(text) {
-	native.displayHelpTextThisFrame(text, true);
+	natives.beginTextCommandDisplayHelp("STRING");
+	natives.addTextComponentSubstringPlayerName(text);
+	natives.endTextCommandDisplayHelp(0, false, false, 0);
 }
 
 alt.everyTick(() => {
