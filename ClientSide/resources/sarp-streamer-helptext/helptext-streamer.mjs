@@ -56,7 +56,7 @@ class HelpTextStreamer {
 		}
 	}
 
-	setText(entityId, text = "Non dï¿½fini") {
+	setText(entityId, text = "Non défini") {
 		if (this.helpText.hasOwnProperty(entityId)) {
 			this.helpText[entityId].text = text;
 		}

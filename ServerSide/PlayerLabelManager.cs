@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace IdentityRP.Manager
+namespace EntityStreamer
 {
     /// <summary>
     /// Class to hold drop shadow data.

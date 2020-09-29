@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace SARP.Manager.HelpText
+namespace EntityStreamer
 {
 
-	/// <summary>
-	/// HelpText class that stores all data
-	/// </summary>
-	public class HelpText : Entity, IEntity
+    /// <summary>
+    /// HelpText class that stores all data
+    /// </summary>
+    public class HelpText : Entity, IEntity
     {
 
-		/// <summary>
-		/// Set/get the HelpText text.
-		/// </summary>
-		public string Text
+        /// <summary>
+        /// Set/get the HelpText text.
+        /// </summary>
+        public string Text
         {
             get
             {
@@ -34,7 +34,7 @@ namespace SARP.Manager.HelpText
         public static object HelpTextLockHandle = new object();
         private static List<HelpText> helpTextList = new List<HelpText>();
         public static List<HelpText> HelpTextList
-		{
+        {
             get
             {
                 lock (HelpTextLockHandle)
@@ -44,7 +44,7 @@ namespace SARP.Manager.HelpText
             }
             set
             {
-				helpTextList = value;
+                helpTextList = value;
             }
         }
 
@@ -57,7 +57,7 @@ namespace SARP.Manager.HelpText
         /// </summary>
         public void Delete()
         {
-			HelpText.HelpTextList.Remove(this);
+            HelpText.HelpTextList.Remove(this);
             AltEntitySync.RemoveEntity(this);
         }
 
@@ -68,7 +68,7 @@ namespace SARP.Manager.HelpText
     }
 
     public static class HelpTextStreamer
-	{
+    {
         /// <summary>
         /// Create a new HelpText.
         /// </summary>
@@ -78,56 +78,49 @@ namespace SARP.Manager.HelpText
             string text, Vector3 position, int dimension = 0, uint streamRange = 5
         )
         {
-			HelpText helper = new HelpText(position, dimension, streamRange, 4)
+            HelpText helper = new HelpText(position, dimension, streamRange, 3)
             {
                 Text = text,
             };
-            mGlobal.API.RunSameThread(() =>
-            {
-				HelpText.HelpTextList.Add(helper);
-                AltEntitySync.AddEntity(helper);
-            });
+
+            HelpText.HelpTextList.Add(helper);
+            AltEntitySync.AddEntity(helper);
             return helper;
         }
 
-		/// <summary>
-		/// Destroy HelpText by it's ID.
-		/// </summary>
-		/// <param name="dynamicTextLabelId">The ID of the text label.</param>
-		/// <returns>True if successful, false otherwise.</returns>
-		public static bool DeleteHelpText(ulong dynamicTextLabelId)
+        /// <summary>
+        /// Destroy HelpText by it's ID.
+        /// </summary>
+        /// <param name="dynamicTextLabelId">The ID of the text label.</param>
+        /// <returns>True if successful, false otherwise.</returns>
+        public static bool DeleteHelpText(ulong dynamicTextLabelId)
         {
-			HelpText obj = GetHelpText(dynamicTextLabelId);
+            HelpText obj = GetHelpText(dynamicTextLabelId);
 
             if (obj == null)
                 return false;
-            mGlobal.API.RunSameThread(() =>
-            {
-				HelpText.HelpTextList.Remove(obj);
-                AltEntitySync.RemoveEntity(obj);
-            });
+
+            HelpText.HelpTextList.Remove(obj);
+            AltEntitySync.RemoveEntity(obj);
             return true;
         }
 
-		/// <summary>
-		/// Destroy an HelpText.
-		/// </summary>
-		/// <param name="dynamicTextLabel">The text label instance to destroy.</param>
-		public static void DeleteHelpText(HelpText dynamicTextLabel)
+        /// <summary>
+        /// Destroy an HelpText.
+        /// </summary>
+        /// <param name="dynamicTextLabel">The text label instance to destroy.</param>
+        public static void DeleteHelpText(HelpText dynamicTextLabel)
         {
-            mGlobal.API.RunSameThread(() =>
-            {
-				HelpText.HelpTextList.Remove(dynamicTextLabel);
-                AltEntitySync.RemoveEntity(dynamicTextLabel);
-            });
+            HelpText.HelpTextList.Remove(dynamicTextLabel);
+            AltEntitySync.RemoveEntity(dynamicTextLabel);
         }
 
-		/// <summary>
-		/// Get a HelpText by it's ID.
-		/// </summary>
-		/// <param name="dynamicTextLabelId">The ID of the textlabel.</param>
-		/// <returns>The dynamic textlabel or null if not found.</returns>
-		public static HelpText GetHelpText(ulong dynamicTextLabelId)
+        /// <summary>
+        /// Get a HelpText by it's ID.
+        /// </summary>
+        /// <param name="dynamicTextLabelId">The ID of the textlabel.</param>
+        /// <returns>The dynamic textlabel or null if not found.</returns>
+        public static HelpText GetHelpText(ulong dynamicTextLabelId)
         {
             if (!AltEntitySync.TryGetEntity(dynamicTextLabelId, 4, out IEntity entity))
             {
@@ -138,32 +131,29 @@ namespace SARP.Manager.HelpText
             return (HelpText)entity;
         }
 
-		/// <summary>
-		/// Destroy all HelpText.
-		/// </summary>
-		public static void DeleteAllHelpText()
+        /// <summary>
+        /// Destroy all HelpText.
+        /// </summary>
+        public static void DeleteAllHelpText()
         {
-            mGlobal.API.RunSameThread(() =>
+            foreach (HelpText obj in GetAllHelpText())
             {
-                foreach (HelpText obj in GetAllHelpText())
-                {
-					HelpText.HelpTextList.Remove(obj);
-                    AltEntitySync.RemoveEntity(obj);
-                }
-            });
+                HelpText.HelpTextList.Remove(obj);
+                AltEntitySync.RemoveEntity(obj);
+            }
         }
 
-		/// <summary>
-		/// Get all HelpText.
-		/// </summary>
-		/// <returns>A list of dynamic textlabels.</returns>
-		public static List<HelpText> GetAllHelpText()
+        /// <summary>
+        /// Get all HelpText.
+        /// </summary>
+        /// <returns>A list of dynamic textlabels.</returns>
+        public static List<HelpText> GetAllHelpText()
         {
             List<HelpText> textLabels = new List<HelpText>();
 
             foreach (IEntity entity in HelpText.HelpTextList)
             {
-				HelpText textLabel = GetHelpText(entity.Id);
+                HelpText textLabel = GetHelpText(entity.Id);
 
                 if (textLabel != null)
                     textLabels.Add(textLabel);
