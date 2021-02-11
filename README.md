@@ -16,7 +16,7 @@ Make sure to add the following code to your gamemode's OnStart() method(the stre
 // Documentation: https://fabianterhorst.github.io/coreclr-module/articles/entity-sync.html
 
 ```
-AltEntitySync.Init(5, 200, true,
+AltEntitySync.Init(5, 200, (threadId) => false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => entity.Type,
    (entityId, entityType, threadCount) => entityType,
