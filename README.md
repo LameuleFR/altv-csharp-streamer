@@ -10,13 +10,13 @@ Initially Based on @DasNiels Work.
 - Blip (Static/Dynamic)
 
 # Installation
-This resource makes use of the AltV.Net.EntitySync (v1.7.0-dev-preview) and AltV.Net.EntitySync.ServerEvent (v1.7.0) nuget package, make sure to install those prior to using this resource.
+This resource makes use of the AltV.Net.EntitySync (v1.13.0) and AltV.Net.EntitySync.ServerEvent (v4.0.0) nuget package, make sure to install those prior to using this resource.
 
 Make sure to add the following code to your gamemode's OnStart() method(the streamer won't work without it!):
 // Documentation: https://fabianterhorst.github.io/coreclr-module/articles/entity-sync.html
 
 ```
-AltEntitySync.Init(5, 200, (threadId) => false,
+AltEntitySync.Init(5, (syncrate) => 200, (threadId) => false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => entity.Type,
    (entityId, entityType, threadCount) => entityType,
