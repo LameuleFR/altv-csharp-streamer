@@ -103,7 +103,7 @@ namespace SARP.Manager.Door
             uint hash, Vector3 position, float heading ,bool locked, uint streamRange = 25
         )
         {
-            NetworkDoor obj = new NetworkDoor(position, 0, streamRange, (ulong)NetworkEntityType.Door)
+            NetworkDoor obj = new NetworkDoor(position, 0, streamRange, 6)
             {
                 Hash = hash,
                 Locked = locked,

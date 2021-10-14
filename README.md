@@ -35,8 +35,10 @@ AltEntitySync.Init(5, (syncrate) => 200, (threadId) => false,
 		   3 => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 1),
 		   //BLIP
 		   4 => new EntityStreamer.GlobalEntity(),
-		   //BLIP DYNAMIQUE
+		   //DYNAMIC BLIP
 		   5 => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 200),
+		   //DOOR
+		   6 => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 50),
 		   _ => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 115),
 	   };
    },

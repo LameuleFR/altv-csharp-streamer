@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import { doorStreamer } from "./door-streamer";
-const ThreadID = 8;
+const ThreadID = 6;
 
 // when an object is streamed in
 alt.onServer("entitySync:create", (entityId: number, entityType: number, position: alt.Vector3, currEntityData: any) => {
