@@ -8,6 +8,7 @@ Initially Based on @DasNiels Work.
 - Marker
 - Object
 - Blip (Static/Dynamic)
+- Door
 
 # Installation
 This resource makes use of the AltV.Net.EntitySync (v1.13.0) and AltV.Net.EntitySync.ServerEvent (v4.0.0) nuget package, make sure to install those prior to using this resource.
