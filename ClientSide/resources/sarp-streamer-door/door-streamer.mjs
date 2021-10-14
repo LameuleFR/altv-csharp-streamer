@@ -2,12 +2,10 @@ import * as alt from 'alt-client';
 import * as native from 'natives';
 
 class DoorStreamer {
-    private doors: any[]
-
     constructor() {
-        this.doors = []
+        this.doors = [];
     }
-    async addDoor(entityId: number, position: alt.Vector3, heading: number, entityType: number, hash: string, locked: boolean) {
+    async addDoor(entityId, position, heading, entityType, hash, locked) {
         this.clearDoor(+entityId);
         let door = {
             hash: hash, locked: locked, position: position,
@@ -16,7 +14,7 @@ class DoorStreamer {
         this.doors[entityId] = door;
         this.setState(entityId, locked);
     }
-    getDoor(entityId: number) {
+    getDoor(entityId) {
         if (this.doors.hasOwnProperty(entityId)) {
             return this.doors[entityId];
         }
@@ -24,18 +22,18 @@ class DoorStreamer {
             return null;
         }
     }
-    restoreDoor(entityId: number) {
+    restoreDoor(entityId) {
         if (this.doors.hasOwnProperty(entityId)) {
             let door = this.doors[entityId];
             this.setState(entityId, door.locked);
         }
     }
-    removeDoor(entityId: number) {
+    removeDoor(entityId) {
         if (this.doors.hasOwnProperty(entityId)) {
             delete this.doors[entityId];
         }
     }
-    clearDoor(entityId: number) {
+    clearDoor(entityId) {
         if (this.doors.hasOwnProperty(entityId)) {
             delete this.doors[entityId];
         }
@@ -43,12 +41,12 @@ class DoorStreamer {
     clearAllDoor() {
         this.doors = [];
     }
-    setPosition(entityId: number, pos: alt.Vector3) {
+    setPosition(entityId, pos) {
         if (this.doors.hasOwnProperty(entityId)) {
             this.doors[entityId].position = pos;
         }
     }
-    setState(entityId: number, locked: boolean) {
+    setState(entityId, locked) {
         if (this.doors.hasOwnProperty(entityId)) {
             let door = this.doors[entityId];
             native.setStateOfClosestDoorOfType(door.hash,

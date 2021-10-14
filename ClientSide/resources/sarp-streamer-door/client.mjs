@@ -3,7 +3,7 @@ import { doorStreamer } from "./door-streamer";
 const ThreadID = 6;
 
 // when an object is streamed in
-alt.onServer("entitySync:create", (entityId: number, entityType: number, position: alt.Vector3, currEntityData: any) => {
+alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {
 	if (currEntityData) {
 		let data = currEntityData;
 		if (data != undefined) {
