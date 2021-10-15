@@ -4,9 +4,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Numerics;
-using TheSantos.Models.Entities.Network;
 
-namespace SARP.Manager.Door
+namespace EntityStreamer
 {
     /// <summary>
     /// DynamicObject class that stores all data related to a single object

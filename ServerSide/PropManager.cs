@@ -39,7 +39,7 @@ namespace EntityStreamer
             writer.Name("X");
             writer.Value(X);
             writer.Name("Y");
-            writer.Value("Y");
+            writer.Value(Y);
             writer.Name("Z");
             writer.Value(Z);
             writer.Name("Speed");
