@@ -17,7 +17,7 @@ Make sure to add the following code to your gamemode's OnStart() method(the stre
 // Documentation: https://docs.altv.mp/cs/articles/entity-sync.html
 
 ```
-AltEntitySync.Init(5, (syncrate) => 200, (threadId) => false,
+AltEntitySync.Init(8, (syncrate) => 200, (threadId) => false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => entity.Type,
    (entityId, entityType, threadCount) => entityType,
