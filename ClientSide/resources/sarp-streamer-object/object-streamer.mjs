@@ -28,14 +28,14 @@ class ObjectStreamer {
         this.objects = {};
     }
 
-    async addObject( entityId, model, entityType, pos, rot, lodDistance, textureVariation, dynamic, visible, onFire, frozen, lightColor  ) {
+    async addObject(entityId, model, entityType, pos, rot, lodDistance, textureVariation, dynamic, visible, onFire, frozen, lightColor  ) {
         // clear the object incase it still exists.
         this.removeObject( +entityId );
         this.clearObject( +entityId );
 
         loadModel(model).then(() =>
         {
-            let handle = natives.createObject( natives.getHashKey( model ), pos.x, pos.y, pos.z, false, false, false );
+            let handle = natives.createObject(model, pos.x, pos.y, pos.z, false, false, false );
             let obj = { handle: handle, entityId: entityId, model: model, entityType: entityType, position: pos, frozen: frozen };
             this.objects[entityId] = obj;
             this.setRotation( +entityId, rot );

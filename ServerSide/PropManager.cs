@@ -193,11 +193,11 @@ namespace EntityStreamer
         /// <summary>
         /// Set or get the current object's model.
         /// </summary>
-        public string Model
+        public uint Model
         {
             get
             {
-                if (!TryGetData("model", out string model))
+                if (!TryGetData("model", out uint model))
                     return null;
 
                 return model;
@@ -473,7 +473,7 @@ namespace EntityStreamer
         /// <param name="streamRange">(Optional): The range that a player has to be in before the object spawns, default value is 400.</param>
         /// <returns>The newly created dynamic object.</returns>
         public static Prop Create(
-            string model, Vector3 position, Vector3 rotation, int dimension = 0, bool? isDynamic = null, bool? placeObjectOnGroundProperly = false, bool? frozen = null, uint? lodDistance = null,
+            uint model, Vector3 position, Vector3 rotation, int dimension = 0, bool? isDynamic = null, bool? placeObjectOnGroundProperly = false, bool? frozen = null, uint? lodDistance = null,
             Rgb lightColor = null, bool? onFire = null, TextureVariation? textureVariation = null, bool? visible = null, uint streamRange = 520
         )
         {
