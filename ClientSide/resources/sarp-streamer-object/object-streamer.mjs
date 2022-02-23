@@ -1,6 +1,9 @@
 import * as alt from 'alt';
 import * as natives from 'natives';
 
+function waitFor(duration) {
+  return new Promise(resolve => setTimeout(resolve, duration));
+}
 
 async function loadModel(model) {
     return new Promise(resolve => {
