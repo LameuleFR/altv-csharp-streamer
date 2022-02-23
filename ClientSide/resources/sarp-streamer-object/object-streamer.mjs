@@ -39,10 +39,10 @@ class ObjectStreamer {
             let obj = { handle: handle, entityId: entityId, model: model, entityType: entityType, position: pos, frozen: frozen };
             this.objects[entityId] = obj;
             this.setRotation( +entityId, rot );
-            //this.setLodDistance( obj, lodDistance );
+            this.setLodDistance( obj, lodDistance );
             this.setTextureVariation( +entityId, textureVariation );
             this.setDynamic( +entityId, dynamic );
-            //this.setVisible( obj, visible );
+            this.setVisible( obj, visible );
             this.setOnFire( +entityId, onFire );
             this.setFrozen( +entityId, frozen );
             this.setLightColor( +entityId, lightColor );
