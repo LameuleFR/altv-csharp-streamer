@@ -49,7 +49,7 @@ class ObjectStreamer {
         });
     }
 
-    getObject( entityId, entityType ) {
+    getObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         return this.objects[entityId];
       }else{
@@ -57,7 +57,7 @@ class ObjectStreamer {
       }
     }
 
-    async restoreObject( entityId, entityType ) {
+    async restoreObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         let obj = this.objects[entityId];
         loadModel(obj.model).then(() =>
@@ -75,14 +75,14 @@ class ObjectStreamer {
       }
     }
 
-    removeObject( entityId, entityType ) {
+    removeObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         natives.deleteObject( this.objects[entityId].handle );
         this.objects[entityId].handle = null;
       }
     }
 
-    clearObject( entityId, entityType ) {
+    clearObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         delete this.objects[entityId];
       }
@@ -104,23 +104,8 @@ class ObjectStreamer {
         this.objects[entityId].velocity = vel;
       }
     }
-    slideToPosition( entityId, pos, time ) {
-        let count = 0;
+    slideToPosition( entityId, pos ) {
         natives.slideObject(this.objects[entityId].handle, pos.x, pos.y, pos.z, 8, 8, 8, true);
-        /*
-        var slide = alt.setInterval(() =>
-        {
-            alt.log("slideInterval:count:" + count);
-            count++;
-            if(count >= 10) alt.clearInterval(slide);
-            var objectPos = native.getEntityCoords(objet, false);
-            var vel = {x,y,z};
-            vel.x = (pos.x - objectPos.x) / 3;
-            vel.y = (pos.y - objectPos.y) / 3;
-            vel.z = (pos.z - objectPos.z) / 3;
-		    natives.setEntityVelocity( obj.handle, vel.x, vel.y, vel.z);
-        }, time / 10);
-        */
     }
 
     setPosition( entityId, pos ) {
