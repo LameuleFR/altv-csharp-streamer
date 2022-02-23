@@ -64,10 +64,10 @@ class ObjectStreamer {
         {
             this.objects[entityId].handle = natives.createObjectNoOffset( natives.getHashKey( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
             this.setRotation( +entityId, obj.rotation );
-            //this.setLodDistance( obj, obj.lodDistance );
+            this.setLodDistance( obj, obj.lodDistance );
             this.setTextureVariation( +entityId, obj.textureVariation );
             this.setDynamic( +entityId, obj.dynamic );
-            //this.setVisible( obj, obj.visible );
+            this.setVisible( obj, obj.visible );
             this.setOnFire( +entityId, obj.onFire );
             this.setFrozen( +entityId, obj.frozen );
             this.setLightColor( +entityId, obj.lightColor );
