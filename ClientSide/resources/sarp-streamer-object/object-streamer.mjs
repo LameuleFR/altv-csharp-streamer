@@ -35,7 +35,7 @@ class ObjectStreamer {
 
         loadModel(model).then(() =>
         {
-            let handle = natives.createObject(model, pos.x, pos.y, pos.z, false, false, false );
+            let handle = natives.createObjectNoOffset(model, pos.x, pos.y, pos.z, false, false, false );
             let obj = { handle: handle, entityId: entityId, model: model, entityType: entityType, position: pos, frozen: frozen };
             this.objects[entityId] = obj;
             this.setRotation( +entityId, rot );
@@ -62,7 +62,7 @@ class ObjectStreamer {
         let obj = this.objects[entityId];
         loadModel(obj.model).then(() =>
         {
-            this.objects[entityId].handle = natives.createObject( natives.getHashKey( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
+            this.objects[entityId].handle = natives.createObjectNoOffset( natives.getHashKey( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
             this.setRotation( +entityId, obj.rotation );
             //this.setLodDistance( obj, obj.lodDistance );
             this.setTextureVariation( +entityId, obj.textureVariation );
