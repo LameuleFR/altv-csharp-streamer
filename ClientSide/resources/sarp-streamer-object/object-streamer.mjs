@@ -130,7 +130,8 @@ class ObjectStreamer {
 
     setTextureVariation( entityId, textureVariation = null ) {
       if(this.objects.hasOwnProperty(entityId)){
-        natives.setObjectTextureVariation( this.objects[entityId].handle, textureVariation );
+        if(textureVariation == null)
+          natives.setObjectTextureVariation( this.objects[entityId].handle, textureVariation );
         this.objects[entityId].textureVariation = textureVariation;
       }
     }
