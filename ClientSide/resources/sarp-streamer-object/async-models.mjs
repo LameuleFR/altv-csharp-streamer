@@ -17,7 +17,7 @@ class AsyncModel {
     async load( entityId, entityType, model ) {
         return new Promise( resolve => {
             if( typeof model === 'string' )
-                model = natives.getHashKey( model );
+                model = alt.hash( model );
 
             this.loadingModels.add( +entityId, +entityType );
 
