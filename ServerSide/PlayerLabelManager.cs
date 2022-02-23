@@ -135,7 +135,7 @@ namespace EntityStreamer
             set
             {
                 // No data changed
-                if (Color != null && Color.R == value.R && Color.G == value.G && Color.B == value.B && Color.A == value.A)
+                if (Color.R == value.R && Color.G == value.G && Color.B == value.B && Color.A == value.A)
                     return;
 
                 Dictionary<string, object> dict = new Dictionary<string, object>()
@@ -170,7 +170,7 @@ namespace EntityStreamer
             set
             {
                 // No data changed
-                if (Edge != null && Edge.R == value.R && Edge.G == value.G && Edge.B == value.B && Edge.A == value.A)
+                if (Edge.R == value.R && Edge.G == value.G && Edge.B == value.B && Edge.A == value.A)
                     return;
 
                 Dictionary<string, object> dict = new Dictionary<string, object>()
@@ -206,7 +206,7 @@ namespace EntityStreamer
             set
             {
                 // No data changed
-                if (DropShadow != null && DropShadow.Distance == value.Distance && DropShadow.R == value.R && DropShadow.G == value.G && DropShadow.B == value.B && DropShadow.A == value.A)
+                if (DropShadow.Distance == value.Distance && DropShadow.R == value.R && DropShadow.G == value.G && DropShadow.B == value.B && DropShadow.A == value.A)
                     return;
 
                 Dictionary<string, object> dict = new Dictionary<string, object>()
