@@ -75,7 +75,7 @@ alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
             objStreamer.setLightColor( +entityId, newEntityData.lightColor );
 
         if( newEntityData.hasOwnProperty( "slideToPosition" ) )
-            objStreamer.slideToPosition( +entityId, newEntityData.slideToPosition, 500 );
+            objStreamer.slideToPosition( +entityId, newEntityData.slideToPosition );
 
     }
 } );
