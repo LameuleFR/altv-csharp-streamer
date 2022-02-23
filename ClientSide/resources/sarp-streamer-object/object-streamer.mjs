@@ -6,24 +6,20 @@ function waitFor(duration) {
 }
 
 async function loadModel(model) {
-    return new Promise(resolve => {
+    if (typeof model === "string") model = alt.hash(model);
+    if (!natives.isModelValid(model)) return false;
+    if(natives.hasModelLoaded(model)) return true;
 
-        if (!natives.isModelValid(model))
-            return resolve(false);
+    natives.requestModel(model);
 
-        if (natives.hasModelLoaded(model))
-            return resolve(true);
+    let hasModelLoaded = false;
+    let tries = 0;
 
-            natives.requestModel(model);
+    while (!(hasModelLoaded = natives.hasModelLoaded(model)) && tries++ < 10) {
+        await waitFor(10);
+    }
 
-        let interval = alt.setInterval(() => {
-                if (natives.hasModelLoaded(model)) {
-                    resolve(true);
-                    alt.clearInterval(interval);
-                }
-            },
-            5);
-    });
+    return hasModelLoaded;
 }
 
 class ObjectStreamer {
