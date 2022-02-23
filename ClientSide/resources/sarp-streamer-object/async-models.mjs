@@ -37,7 +37,7 @@ class AsyncModel {
                 if( natives.hasModelLoaded( model ) ) {
                     return done( true );
                 }
-            }, 0 );
+            }, 2 );
 
             const timeout = alt.setTimeout( ( ) => {
                 return done( !!natives.hasModelLoaded( model ) );
