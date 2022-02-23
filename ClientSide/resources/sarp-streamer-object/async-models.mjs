@@ -16,7 +16,13 @@ class AsyncModel {
 
     async load( entityId, entityType, model ) {
         return new Promise( resolve => {
-            if( typeof model === 'string' )
+            if( !natives.isModelValid( model ) )
+                return done( false );
+
+            if( natives.hasModelLoaded( model ) )
+                return done( true );
+
+            if( typeof model === 'string' ) 
                 model = alt.hash( model );
 
             this.loadingModels.add( +entityId, +entityType );
@@ -44,12 +50,6 @@ class AsyncModel {
                 this.loadingModels.delete( +entityId, +entityType );
                 resolve( result );
             };
-
-            if( !natives.isModelValid( model ) )
-                return done( false );
-
-            if( natives.hasModelLoaded( model ) )
-                return done( true );
         } );
     }
 }
