@@ -11,7 +11,7 @@ Initially Based on @DasNiels Work.
 - Door
 
 # Installation
-This resource makes use of the AltV.Net.EntitySync (v1.13.0) and AltV.Net.EntitySync.ServerEvent (v4.0.0) nuget package, make sure to install those prior to using this resource.
+This resource makes use of the AltV.Net.EntitySync (v1.13.0) and AltV.Net.EntitySync.ServerEvent (v9.0.2) nuget package, make sure to install those prior to using this resource.
 
 Make sure to add the following code to your gamemode's OnStart() method(the streamer won't work without it!):
 // Documentation: https://docs.altv.mp/cs/articles/entity-sync.html
