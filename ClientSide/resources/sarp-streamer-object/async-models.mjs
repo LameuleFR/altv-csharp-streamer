@@ -16,8 +16,14 @@ class AsyncModel {
 
     async load( entityId, entityType, model ) {
         return new Promise( resolve => {
-            if( typeof model === 'string' )
-                model = natives.getHashKey( model );
+            if( !natives.isModelValid( model ) )
+                return done( false );
+
+            if( natives.hasModelLoaded( model ) )
+                return done( true );
+
+            if( typeof model === 'string' ) 
+                model = alt.hash( model );
 
             this.loadingModels.add( +entityId, +entityType );
 
@@ -31,7 +37,7 @@ class AsyncModel {
                 if( natives.hasModelLoaded( model ) ) {
                     return done( true );
                 }
-            }, 0 );
+            }, 2 );
 
             const timeout = alt.setTimeout( ( ) => {
                 return done( !!natives.hasModelLoaded( model ) );
@@ -44,12 +50,6 @@ class AsyncModel {
                 this.loadingModels.delete( +entityId, +entityType );
                 resolve( result );
             };
-
-            if( !natives.isModelValid( model ) )
-                return done( false );
-
-            if( natives.hasModelLoaded( model ) )
-                return done( true );
         } );
     }
 }

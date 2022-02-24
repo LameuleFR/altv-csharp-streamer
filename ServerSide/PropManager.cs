@@ -118,7 +118,7 @@ namespace EntityStreamer
             set
             {
                 // No data changed
-                if (Rotation != null && Rotation.X == value.X && Rotation.Y == value.Y && Rotation.Z == value.Z && value != new Vector3(0, 0, 0))
+                if (Rotation.X == value.X && Rotation.Y == value.Y && Rotation.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
                 Dictionary<string, object> dict = new Dictionary<string, object>()
@@ -148,7 +148,7 @@ namespace EntityStreamer
             set
             {
                 // No data changed
-                if (Velocity != null && Velocity.X == value.X && Velocity.Y == value.Y && Velocity.Z == value.Z && value != new Vector3(0, 0, 0))
+                if (Velocity.X == value.X && Velocity.Y == value.Y && Velocity.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
                 Dictionary<string, object> dict = new Dictionary<string, object>()
@@ -193,7 +193,7 @@ namespace EntityStreamer
         /// <summary>
         /// Set or get the current object's model.
         /// </summary>
-        public uint Model
+        public uint Model?
         {
             get
             {
@@ -412,7 +412,7 @@ namespace EntityStreamer
                 }
 
                 // No data changed
-                if (LightColor != null && LightColor.Red == value.Red && LightColor.Green == value.Green && LightColor.Blue == value.Blue)
+                if (LightColor.Red == value.Red && LightColor.Green == value.Green && LightColor.Blue == value.Blue)
                     return;
 
                 Dictionary<string, object> dict = new Dictionary<string, object>

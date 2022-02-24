@@ -1,26 +1,25 @@
 import * as alt from 'alt';
 import * as natives from 'natives';
 
+function waitFor(duration) {
+  return new Promise(resolve => setTimeout(resolve, duration));
+}
 
 async function loadModel(model) {
-    return new Promise(resolve => {
+    if (typeof model === "string") model = alt.hash(model);
+    if (!natives.isModelValid(model)) return false;
+    if(natives.hasModelLoaded(model)) return true;
 
-        if (!natives.isModelValid(model))
-            return resolve(false);
+    natives.requestModel(model);
 
-        if (natives.hasModelLoaded(model))
-            return resolve(true);
+    let hasModelLoaded = false;
+    let tries = 0;
 
-            natives.requestModel(model);
+    while (!(hasModelLoaded = natives.hasModelLoaded(model)) && tries++ < 10) {
+        await waitFor(10);
+    }
 
-        let interval = alt.setInterval(() => {
-                if (natives.hasModelLoaded(model)) {
-                    resolve(true);
-                    alt.clearInterval(interval);
-                }
-            },
-            5);
-    });
+    return hasModelLoaded;
 }
 
 class ObjectStreamer {
@@ -35,21 +34,21 @@ class ObjectStreamer {
 
         loadModel(model).then(() =>
         {
-            let handle = natives.createObject(model, pos.x, pos.y, pos.z, false, false, false );
+            let handle = natives.createObjectNoOffset(model, pos.x, pos.y, pos.z, false, false, false );
             let obj = { handle: handle, entityId: entityId, model: model, entityType: entityType, position: pos, frozen: frozen };
             this.objects[entityId] = obj;
             this.setRotation( +entityId, rot );
-            //this.setLodDistance( obj, lodDistance );
+            this.setLodDistance( obj, lodDistance );
             this.setTextureVariation( +entityId, textureVariation );
             this.setDynamic( +entityId, dynamic );
-            //this.setVisible( obj, visible );
+            this.setVisible( obj, visible );
             this.setOnFire( +entityId, onFire );
             this.setFrozen( +entityId, frozen );
             this.setLightColor( +entityId, lightColor );
         });
     }
 
-    getObject( entityId, entityType ) {
+    getObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         return this.objects[entityId];
       }else{
@@ -57,17 +56,17 @@ class ObjectStreamer {
       }
     }
 
-    async restoreObject( entityId, entityType ) {
+    async restoreObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         let obj = this.objects[entityId];
         loadModel(obj.model).then(() =>
         {
-            this.objects[entityId].handle = natives.createObject( natives.getHashKey( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
+            this.objects[entityId].handle = natives.createObjectNoOffset( alt.hash( obj.model ), obj.position.x, obj.position.y, obj.position.z, false, false, false );
             this.setRotation( +entityId, obj.rotation );
-            //this.setLodDistance( obj, obj.lodDistance );
+            this.setLodDistance( obj, obj.lodDistance );
             this.setTextureVariation( +entityId, obj.textureVariation );
             this.setDynamic( +entityId, obj.dynamic );
-            //this.setVisible( obj, obj.visible );
+            this.setVisible( obj, obj.visible );
             this.setOnFire( +entityId, obj.onFire );
             this.setFrozen( +entityId, obj.frozen );
             this.setLightColor( +entityId, obj.lightColor );
@@ -75,14 +74,14 @@ class ObjectStreamer {
       }
     }
 
-    removeObject( entityId, entityType ) {
+    removeObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         natives.deleteObject( this.objects[entityId].handle );
         this.objects[entityId].handle = null;
       }
     }
 
-    clearObject( entityId, entityType ) {
+    clearObject( entityId ) {
       if(this.objects.hasOwnProperty(entityId)){
         delete this.objects[entityId];
       }
@@ -104,23 +103,8 @@ class ObjectStreamer {
         this.objects[entityId].velocity = vel;
       }
     }
-    slideToPosition( entityId, pos, time ) {
-        let count = 0;
-        native.slideObject(this.objects[entityId].handle, pos.x, pos.y, pos.z, 8, 8, 8, true);
-        /*
-        var slide = alt.setInterval(() =>
-        {
-            alt.log("slideInterval:count:" + count);
-            count++;
-            if(count >= 10) alt.clearInterval(slide);
-            var objectPos = native.getEntityCoords(objet, false);
-            var vel = {x,y,z};
-            vel.x = (pos.x - objectPos.x) / 3;
-            vel.y = (pos.y - objectPos.y) / 3;
-            vel.z = (pos.z - objectPos.z) / 3;
-		    natives.setEntityVelocity( obj.handle, vel.x, vel.y, vel.z);
-        }, time / 10);
-        */
+    slideToPosition( entityId, pos ) {
+        natives.slideObject(this.objects[entityId].handle, pos.x, pos.y, pos.z, 8, 8, 8, true);
     }
 
     setPosition( entityId, pos ) {
@@ -145,7 +129,8 @@ class ObjectStreamer {
 
     setTextureVariation( entityId, textureVariation = null ) {
       if(this.objects.hasOwnProperty(entityId)){
-        natives.setObjectTextureVariation( this.objects[entityId].handle, textureVariation );
+        if(textureVariation == null)
+          natives.setObjectTextureVariation( this.objects[entityId].handle, textureVariation );
         this.objects[entityId].textureVariation = textureVariation;
       }
     }
