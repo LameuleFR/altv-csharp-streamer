@@ -193,7 +193,7 @@ namespace EntityStreamer
         /// <summary>
         /// Set or get the current object's model.
         /// </summary>
-        public uint Model?
+        public uint? Model
         {
             get
             {
