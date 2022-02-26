@@ -79,7 +79,7 @@ namespace EntityStreamer
     /// </summary>
     public class Prop : Entity, IEntity
     {
-        private static List<Prop> propList = new List<Prop>();
+        private static List<Prop> propList = new();
 
         public static List<Prop> PropList
         {
@@ -121,7 +121,7 @@ namespace EntityStreamer
                 if (Rotation.X == value.X && Rotation.Y == value.Y && Rotation.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["x"] = value.X,
                     ["y"] = value.Y,
@@ -151,7 +151,7 @@ namespace EntityStreamer
                 if (Velocity.X == value.X && Velocity.Y == value.Y && Velocity.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["x"] = value.X,
                     ["y"] = value.Y,
@@ -415,7 +415,7 @@ namespace EntityStreamer
                 if (LightColor.Red == value.Red && LightColor.Green == value.Green && LightColor.Blue == value.Blue)
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>
+                Dictionary<string, object> dict = new()
                 {
                     { "r", value.Red },
                     { "g", value.Green },
