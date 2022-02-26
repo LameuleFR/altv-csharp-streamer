@@ -148,7 +148,7 @@ namespace EntityStreamer
 		/// <param name="dimension"></param>
 		/// <param name="range"></param>
 		/// <returns></returns>
-		public static Blip CreateStaticBlip(string name, int color, float scale, bool shortRange, int spriteId, Vector3 position, int dimension, uint range = 100)
+		public static Blip CreateStaticBlip(string name, int color, float scale, bool shortRange, int spriteId, Vector3 position, int dimension = 0, uint range = 100)
 		{
 			Blip blip = new Blip(position, dimension, range, 4)
 			{
@@ -176,7 +176,7 @@ namespace EntityStreamer
 		/// <param name="dimension"></param>
 		/// <param name="range"></param>
 		/// <returns></returns>
-		public static Blip CreateDynamicBlip(string name, int color, float scale, bool shortRange, int spriteId, Vector3 position, int dimension, uint range = 200)
+		public static Blip CreateDynamicBlip(string name, int color, float scale, bool shortRange, int spriteId, Vector3 position, int dimension = 0, uint range = 200)
 		{
 			Blip blip = new Blip(position, dimension, range, 5)
 			{
