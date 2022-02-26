@@ -91,7 +91,7 @@ namespace EntityStreamer
                 if (Rotation.X == value.X && Rotation.Y == value.Y && Rotation.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["x"] = value.X,
                     ["y"] = value.Y,
@@ -296,7 +296,7 @@ namespace EntityStreamer
                 if (Scale.X == value.X && Scale.Y == value.Y && Scale.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["x"] = value.X,
                     ["y"] = value.Y,
@@ -329,7 +329,7 @@ namespace EntityStreamer
                 if (Direction != null && Direction.X == value.X && Direction.Y == value.Y && Direction.Z == value.Z && value != new Vector3(0, 0, 0))
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["x"] = value.X,
                     ["y"] = value.Y,
@@ -391,7 +391,7 @@ namespace EntityStreamer
                 if (Color != null && Color?.R == value?.R && Color?.G == value?.G && Color?.B == value?.B && Color?.A == value?.A)
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>
+                Dictionary<string, object> dict = new()
                 {
                     { "r", Convert.ToInt32( value?.R ) },
                     { "g", Convert.ToInt32( value?.G ) },
@@ -403,7 +403,7 @@ namespace EntityStreamer
             }
         }
 
-        private static List<Marker> markerList = new List<Marker>();
+        private static List<Marker> markerList = new();
 
         public static List<Marker> MarkerList
         {
