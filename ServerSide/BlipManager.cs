@@ -134,7 +134,7 @@ namespace EntityStreamer
 
 	public static class BlipStreamer
 	{
-		public static Dictionary<ulong, Blip> BlipList = new Dictionary<ulong, Blip>();
+		public static Dictionary<ulong, Blip> BlipList = new();
 
 		/// <summary>
 		/// Create static blip without any range limit
