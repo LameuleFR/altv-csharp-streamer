@@ -20,7 +20,7 @@ This resource makes use of the AltV.Net.EntitySync (v1.13.0) and AltV.Net.Entity
 Make sure to add the following code to your gamemode's OnStart() method(the streamer won't work without it!):
 // Documentation: https://docs.altv.mp/cs/articles/entity-sync.html
 
-```
+```cs
 AltEntitySync.Init(8, (syncrate) => 200, (threadId) => false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => entity.Type,
@@ -51,8 +51,39 @@ AltEntitySync.Init(8, (syncrate) => 200, (threadId) => false,
 new IdProvider());
 ```
 
+# Examples
+### TextLabels:
+```cs
+TextLabelStreamer.Create("Your fancy text", new(0,0,0));
+```
+### HelpTexts:
+```cs
+HelpTextStreamer.Create("Also your fancy text", new(0,0,0));
+```
+### Markers:
+```cs
+MarkerStreamer.Create(MarkerTypes.MarkerTypeDallorSign, new(0,0,0), new(1,1,1));
+```
+### Objects: 
+```cs
+PropStreamer.Create(145818549, new Vector3(0,0,0), new Vector3(0,0,0));
+```
+### Blips:
+```cs
+BlipStreamer.CreateDynamicBlip("Fancy blip", 54, 1, true, 24, new(0,0,0), 0);
+BlipStreamer.CreateStaticBlip("Fancy static blip", 23, 1, false, 56, new(0,0,0), 0);
+```
+### Doors:
+```cs
+DoorStreamer.Create(631614199, new(461.8065F, -994.4086F, 25.06443F),90, true);
+```
+### CustomMarkers:
+```cs
+CustomMarkerStreamer.Create("Fancy text here", 2, new(0,0,0), MarkerOrientations.ARROW_ON_BOTTOM, 0, 5);
+```
+
 # Credits
-> Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/
-> Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer
-> Original Marker Streamer: https://github.com/DasNiels/altv-marker-streamer
+> Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/ <br/>
+> Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer/ <br/>
+> Original Marker Streamer: https://github.com/DasNiels/altv-marker-streamer/ <br/>
 > CustomMarker Streamer: [Phill](https://github.com/Phill030/)
