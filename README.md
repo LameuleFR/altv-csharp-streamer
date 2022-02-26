@@ -70,8 +70,8 @@ PropStreamer.Create(145818549, new Vector3(0,0,0), new Vector3(0,0,0));
 ```
 ### Blips:
 ```cs
-BlipStreamer.CreateDynamicBlip("Fancy blip", 54, 1, true, 24, new(0,0,0), 0);
-BlipStreamer.CreateStaticBlip("Fancy static blip", 23, 1, false, 56, new(0,0,0), 0);
+BlipStreamer.CreateDynamicBlip("Fancy blip", 54, 1, true, 24, new(0,0,0));
+BlipStreamer.CreateStaticBlip("Fancy static blip", 23, 1, false, 56, new(0,0,0));
 ```
 ### Doors:
 ```cs
