@@ -31,8 +31,8 @@ namespace EntityStreamer
             }
         }
 
-        public static object HelpTextLockHandle = new object();
-        private static List<HelpText> helpTextList = new List<HelpText>();
+        public static object HelpTextLockHandle = new();
+        private static List<HelpText> helpTextList = new();
         public static List<HelpText> HelpTextList
         {
             get

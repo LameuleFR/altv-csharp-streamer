@@ -12,7 +12,7 @@ namespace EntityStreamer
 {
 	public class GlobalEntity : SpatialPartition
 	{
-		private readonly HashSet<IEntity> entities = new HashSet<IEntity>();
+		private readonly HashSet<IEntity> entities = new();
 
 		public GlobalEntity()
 		{

@@ -138,7 +138,7 @@ namespace EntityStreamer
                 if (Color.R == value.R && Color.G == value.G && Color.B == value.B && Color.A == value.A)
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["r"] = Convert.ToInt32(value.R),
                     ["g"] = Convert.ToInt32(value.G),
@@ -173,7 +173,7 @@ namespace EntityStreamer
                 if (Edge.R == value.R && Edge.G == value.G && Edge.B == value.B && Edge.A == value.A)
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["r"] = Convert.ToInt32(value.R),
                     ["g"] = Convert.ToInt32(value.G),
@@ -209,7 +209,7 @@ namespace EntityStreamer
                 if (DropShadow.Distance == value.Distance && DropShadow.R == value.R && DropShadow.G == value.G && DropShadow.B == value.B && DropShadow.A == value.A)
                     return;
 
-                Dictionary<string, object> dict = new Dictionary<string, object>()
+                Dictionary<string, object> dict = new()
                 {
                     ["distance"] = value.Distance,
                     ["r"] = value.R,
@@ -239,9 +239,9 @@ namespace EntityStreamer
             }
         }
 
-        public static object LabelLockHandle = new object();
+        public static object LabelLockHandle = new();
 
-        private static List<PlayerLabel> labelList = new List<PlayerLabel>();
+        private static List<PlayerLabel> labelList = new();
 
         public static List<PlayerLabel> LabelList
         {
