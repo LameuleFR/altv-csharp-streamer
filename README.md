@@ -9,6 +9,10 @@ Initially Based on @DasNiels Work.
 - Object
 - Blip (Static/Dynamic)
 - Door
+- CustomMarker
+
+### CustomMarker Preview
+<img src="https://user-images.githubusercontent.com/50775241/155850220-e9c88f78-1f93-439d-b3b9-a91a7ad8fe71.png" width="510" height="337">
 
 # Installation
 This resource makes use of the AltV.Net.EntitySync (v1.13.0) and AltV.Net.EntitySync.ServerEvent (v9.0.2) nuget package, make sure to install those prior to using this resource.
@@ -39,6 +43,8 @@ AltEntitySync.Init(8, (syncrate) => 200, (threadId) => false,
 		   5 => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 200),
 		   //DOOR
 		   6 => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 50),
+		   //CustomMarker
+		   9 => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 5),
 		   _ => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 115),
 	   };
    },
@@ -46,6 +52,7 @@ new IdProvider());
 ```
 
 # Credits
-Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/
-Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer
-Original Marker Streamer: https://github.com/DasNiels/altv-marker-streamer
+> Original Object Streamer: https://github.com/DasNiels/altv-object-streamer/
+> Original Text Streamer: https://github.com/DasNiels/altv-textlabel-streamer
+> Original Marker Streamer: https://github.com/DasNiels/altv-marker-streamer
+> CustomMarker Streamer: [Phill](https://github.com/Phill030/)
